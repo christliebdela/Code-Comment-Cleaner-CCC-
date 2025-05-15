@@ -20,6 +20,8 @@ def identify_language(file_path):
         return 'c'
     elif ext in ['.cpp', '.hpp', '.cc', '.cxx']:
         return 'cpp'
+    elif ext == '.java':
+        return 'java'
     else:
         return 'unknown'
 
@@ -42,14 +44,14 @@ def remove_comments(content, language):
         content = re.sub(r'<!--[\s\S]*?-->', '', content)
         result = content.split('\n')
         
-    elif language in ['css', 'javascript', 'c', 'cpp']:
+    elif language in ['css', 'javascript', 'c', 'cpp', 'java']:
         # Handle C-style block comments /* */
         content = re.sub(r'/\*[\s\S]*?\*/', '', content)
         
         # Handle line comments for respective languages
         result = []
         for line in content.split('\n'):
-            if language in ['javascript', 'css']:
+            if language in ['javascript', 'css', 'java']:
                 if '//' in line:
                     line = line.split('//')[0]
             elif language in ['c', 'cpp']:

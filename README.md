@@ -19,6 +19,7 @@ Currently supports comment removal for:
 - JavaScript (`.js`)
 - C (`.c`, `.h`)
 - C++ (`.cpp`, `.hpp`, `.cc`, `.cxx`)
+- Java (`.java`)
 
 *More languages will be added in future updates.*
 
