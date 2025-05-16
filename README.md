@@ -20,6 +20,7 @@ Currently supports comment removal for:
 - C (`.c`, `.h`)
 - C++ (`.cpp`, `.hpp`, `.cc`, `.cxx`)
 - Java (`.java`)
+- Ruby (`.rb`)
 
 *More languages will be added in future updates.*
 

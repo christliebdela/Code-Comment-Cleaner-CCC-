@@ -22,6 +22,8 @@ def identify_language(file_path):
         return 'cpp'
     elif ext == '.java':
         return 'java'
+    elif ext == '.rb':
+        return 'ruby'
     else:
         return 'unknown'
 
@@ -57,6 +59,17 @@ def remove_comments(content, language):
             elif language in ['c', 'cpp']:
                 if '//' in line:
                     line = line.split('//')[0]
+            result.append(line)
+    elif language == 'ruby':
+        # Remove =begin ... =end block comments
+        content = re.sub(r'=begin[\s\S]*?=end', '', content)
+        # Remove single-line comments starting with #
+        result = []
+        for line in content.split('\n'):
+            if '#' in line:
+                # Don't remove shebang
+                if not line.strip().startswith('#!'):
+                    line = line.split('#')[0]
             result.append(line)
     else:
         # For unknown languages, return as is
