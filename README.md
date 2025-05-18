@@ -21,6 +21,7 @@ Currently supports comment removal for:
 - C++ (`.cpp`, `.hpp`, `.cc`, `.cxx`)
 - Java (`.java`)
 - Ruby (`.rb`)
+- Go (`.go`)
 
 *More languages will be added in future updates.*
 
