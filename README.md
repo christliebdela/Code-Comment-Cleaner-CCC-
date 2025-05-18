@@ -22,6 +22,7 @@ Currently supports comment removal for:
 - Java (`.java`)
 - Ruby (`.rb`)
 - Go (`.go`)
+- PHP (`.php`)
 
 *More languages will be added in future updates.*
 

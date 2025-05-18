@@ -35,7 +35,8 @@ def identify_language(file_path):
         '.cpp': 'cpp', '.hpp': 'cpp', '.cc': 'cpp', '.cxx': 'cpp',
         '.java': 'java',
         '.rb': 'ruby',
-        '.go': 'go'  # Added Go support
+        '.go': 'go',
+        '.php': 'php' 
     }
     
     return extension_map.get(ext, 'unknown')
@@ -107,6 +108,23 @@ def remove_comments(content, language):
                 stripped = line.strip()
                 if not (stripped.startswith('#!') or stripped.startswith('# !')):
                     line = line.split('#')[0]
+            result.append(line)
+    
+    # PHP comment handling
+    elif language == 'php':
+        # Remove /* */ block comments
+        content = re.sub(r'/\*[\s\S]*?\*/', '', content)
+        
+        result = []
+        for line in content.split('\n'):
+            # First handle // comments
+            if '//' in line:
+                line = line.split('//')[0]
+            
+            # Then handle # comments (PHP also uses # for single-line comments)
+            if '#' in line:
+                line = line.split('#')[0]
+                
             result.append(line)
     
     # Unknown language handling
