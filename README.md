@@ -1,6 +1,6 @@
 # Code Comment Cleaner (CCC)
 
-A powerful utility script designed to quickly remove comments from source code files across large codebases. Perfect for preparing code for deployment, reducing file sizes, or cleaning up before sharing with others.
+A powerful utility script designed to quickly remove comments from source code files across large codebases. Perfect for preparing code for deployment, reducing file sizes, or cleaning up before sharing with others...
 
 ## Features
 
