@@ -24,6 +24,8 @@ Currently supports comment removal for:
 - Ruby (`.rb`)
 - Go (`.go`)
 - PHP (`.php`)
+- SQL (`.sql`)
+- Swift (`.swift`)
 
 *More languages will be added in future updates.*
 

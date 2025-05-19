@@ -14,15 +14,7 @@ import argparse
 
 
 def identify_language(file_path):
-    """
-    Determine language type based on file extension.
-    
-    Args:
-        file_path (str): Path to the file
-    
-    Returns:
-        str: Identified language or 'unknown' if not supported
-    """
+    """Determine language type based on file extension."""
     ext = os.path.splitext(file_path)[1].lower()
     
     # Map file extensions to language types
@@ -31,13 +23,15 @@ def identify_language(file_path):
         '.html': 'html', '.htm': 'html',
         '.css': 'css',
         '.js': 'javascript',
-        '.ts': 'typescript',  # Added TypeScript support
+        '.ts': 'typescript',
         '.c': 'c', '.h': 'c',
         '.cpp': 'cpp', '.hpp': 'cpp', '.cc': 'cpp', '.cxx': 'cpp',
         '.java': 'java',
         '.rb': 'ruby',
         '.go': 'go',
-        '.php': 'php' 
+        '.php': 'php',
+        '.sql': 'sql',    
+        '.swift': 'swift'   
     }
     
     return extension_map.get(ext, 'unknown')
@@ -126,6 +120,30 @@ def remove_comments(content, language):
             if '#' in line:
                 line = line.split('#')[0]
                 
+            result.append(line)
+    
+    # SQL comment handling
+    elif language == 'sql':
+        # Remove /* */ block comments
+        content = re.sub(r'/\*[\s\S]*?\*/', '', content)
+        
+        result = []
+        for line in content.split('\n'):
+            # Handle -- line comments (SQL style)
+            if '--' in line:
+                line = line.split('--')[0]
+            result.append(line)
+    
+    # Swift comment handling
+    elif language == 'swift':
+        # Remove /* */ block comments
+        content = re.sub(r'/\*[\s\S]*?\*/', '', content)
+        
+        result = []
+        for line in content.split('\n'):
+            # Handle // line comments
+            if '//' in line:
+                line = line.split('//')[0]
             result.append(line)
     
     # Unknown language handling
