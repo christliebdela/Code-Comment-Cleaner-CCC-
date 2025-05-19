@@ -17,6 +17,7 @@ Currently supports comment removal for:
 - HTML (`.html`, `.htm`)
 - CSS (`.css`)
 - JavaScript (`.js`)
+- TypeScript (`.ts`)
 - C (`.c`, `.h`)
 - C++ (`.cpp`, `.hpp`, `.cc`, `.cxx`)
 - Java (`.java`)

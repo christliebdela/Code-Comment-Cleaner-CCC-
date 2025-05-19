@@ -31,6 +31,7 @@ def identify_language(file_path):
         '.html': 'html', '.htm': 'html',
         '.css': 'css',
         '.js': 'javascript',
+        '.ts': 'typescript',  # Added TypeScript support
         '.c': 'c', '.h': 'c',
         '.cpp': 'cpp', '.hpp': 'cpp', '.cc': 'cpp', '.cxx': 'cpp',
         '.java': 'java',
@@ -73,14 +74,14 @@ def remove_comments(content, language):
         result = content.split('\n')
     
     # C-style languages comment handling (C, C++, Java, JS, CSS)
-    elif language in ['css', 'javascript', 'c', 'cpp', 'java']:
+    elif language in ['css', 'javascript', 'typescript', 'c', 'cpp', 'java']:
         # Remove /* */ block comments
         content = re.sub(r'/\*[\s\S]*?\*/', '', content)
         
         result = []
         for line in content.split('\n'):
             # Handle line comments with // for appropriate languages
-            if language in ['javascript', 'css', 'java', 'c', 'cpp']:
+            if language in ['javascript', 'typescript', 'css', 'java', 'c', 'cpp']:
                 if '//' in line:
                     line = line.split('//')[0]
             result.append(line)
