@@ -37,6 +37,7 @@ Currently supports comment removal for:
 - Dart (`.dart`)
 - MATLAB (`.m`)
 - R (`.r`, `.R`)
+- C# (`.cs`)
 
 *More languages will be added in future updates.*
 

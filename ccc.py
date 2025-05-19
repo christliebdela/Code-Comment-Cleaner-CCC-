@@ -42,7 +42,8 @@ def identify_language(file_path):
         '.hs': 'haskell',
         '.dart': 'dart',
         '.m': 'matlab',
-        '.r': 'r', '.R': 'r'
+        '.r': 'r', '.R': 'r',
+        '.cs': 'csharp'
     }
     
     return extension_map.get(ext, 'unknown')
@@ -286,6 +287,21 @@ def remove_comments(content, language):
         for line in content.split('\n'):
             if '#' in line:
                 line = line.split('#')[0]
+            result.append(line)
+    
+    # C# comment handling
+    elif language == 'csharp':
+        # Remove /* */ block comments
+        content = re.sub(r'/\*[\s\S]*?\*/', '', content)
+        
+        # Remove XML documentation comments (///)
+        content = re.sub(r'///.*$', '', content, flags=re.MULTILINE)
+        
+        result = []
+        for line in content.split('\n'):
+            # Handle // line comments
+            if '//' in line:
+                line = line.split('//')[0]
             result.append(line)
     
     # Unknown language handling
