@@ -36,6 +36,7 @@ Currently supports comment removal for:
 - Haskell (`.hs`)
 - Dart (`.dart`)
 - MATLAB (`.m`)
+- R (`.r`, `.R`)
 
 *More languages will be added in future updates.*
 

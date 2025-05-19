@@ -41,7 +41,8 @@ def identify_language(file_path):
         '.yaml': 'yaml', '.yml': 'yaml',
         '.hs': 'haskell',
         '.dart': 'dart',
-        '.m': 'matlab'
+        '.m': 'matlab',
+        '.r': 'r', '.R': 'r'
     }
     
     return extension_map.get(ext, 'unknown')
@@ -277,6 +278,14 @@ def remove_comments(content, language):
             # Handle % line comments
             if '%' in line:
                 line = line.split('%')[0]
+            result.append(line)
+    
+    # R comment handling
+    elif language == 'r':
+        result = []
+        for line in content.split('\n'):
+            if '#' in line:
+                line = line.split('#')[0]
             result.append(line)
     
     # Unknown language handling
