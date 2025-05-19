@@ -26,6 +26,16 @@ Currently supports comment removal for:
 - PHP (`.php`)
 - SQL (`.sql`)
 - Swift (`.swift`)
+- Rust (`.rs`)
+- Kotlin (`.kt`)
+- Bash/Shell (`.sh`, `.bash`)
+- PowerShell (`.ps1`)
+- Lua (`.lua`)
+- Perl (`.pl`, `.pm`)
+- YAML (`.yaml`, `.yml`)
+- Haskell (`.hs`)
+- Dart (`.dart`)
+- MATLAB (`.m`)
 
 *More languages will be added in future updates.*
 

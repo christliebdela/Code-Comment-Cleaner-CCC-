@@ -31,7 +31,17 @@ def identify_language(file_path):
         '.go': 'go',
         '.php': 'php',
         '.sql': 'sql',    
-        '.swift': 'swift'   
+        '.swift': 'swift',
+        '.rs': 'rust',
+        '.kt': 'kotlin',
+        '.sh': 'bash', '.bash': 'bash',
+        '.ps1': 'powershell',
+        '.lua': 'lua',
+        '.pl': 'perl', '.pm': 'perl',
+        '.yaml': 'yaml', '.yml': 'yaml',
+        '.hs': 'haskell',
+        '.dart': 'dart',
+        '.m': 'matlab'
     }
     
     return extension_map.get(ext, 'unknown')
@@ -144,6 +154,129 @@ def remove_comments(content, language):
             # Handle // line comments
             if '//' in line:
                 line = line.split('//')[0]
+            result.append(line)
+    
+    # Rust comment handling
+    elif language == 'rust':
+        # Remove /* */ block comments
+        content = re.sub(r'/\*[\s\S]*?\*/', '', content)
+        
+        result = []
+        for line in content.split('\n'):
+            # Handle // line comments
+            if '//' in line:
+                line = line.split('//')[0]
+            result.append(line)
+    
+    # Kotlin comment handling
+    elif language == 'kotlin':
+        # Remove /* */ block comments
+        content = re.sub(r'/\*[\s\S]*?\*/', '', content)
+        
+        result = []
+        for line in content.split('\n'):
+            # Handle // line comments
+            if '//' in line:
+                line = line.split('//')[0]
+            result.append(line)
+    
+    # Bash comment handling
+    elif language == 'bash':
+        result = []
+        for line in content.split('\n'):
+            if '#' in line:
+                # Preserve shebang
+                if line.strip().startswith('#!'):
+                    result.append(line)
+                else:
+                    line = line.split('#')[0]
+                    result.append(line)
+            else:
+                result.append(line)
+    
+    # PowerShell comment handling
+    elif language == 'powershell':
+        # Remove <# #> block comments
+        content = re.sub(r'<#[\s\S]*?#>', '', content)
+        
+        result = []
+        for line in content.split('\n'):
+            # Handle # line comments
+            if '#' in line:
+                line = line.split('#')[0]
+            result.append(line)
+    
+    # Lua comment handling
+    elif language == 'lua':
+        # Remove --[[ ]] block comments
+        content = re.sub(r'--\[\[[\s\S]*?]]', '', content)
+        
+        result = []
+        for line in content.split('\n'):
+            # Handle -- line comments
+            if '--' in line:
+                line = line.split('--')[0]
+            result.append(line)
+    
+    # Perl comment handling
+    elif language == 'perl':
+        # Remove =begin ... =cut block comments
+        content = re.sub(r'=begin[\s\S]*?=cut', '', content)
+        
+        result = []
+        for line in content.split('\n'):
+            # Handle # line comments (preserving shebangs)
+            if '#' in line:
+                if line.strip().startswith('#!'):
+                    result.append(line)
+                else:
+                    line = line.split('#')[0]
+                    result.append(line)
+            else:
+                result.append(line)
+    
+    # YAML comment handling
+    elif language == 'yaml':
+        result = []
+        for line in content.split('\n'):
+            if '#' in line:
+                line = line.split('#')[0]
+            result.append(line)
+    
+    # Haskell comment handling
+    elif language == 'haskell':
+        # Remove {- -} block comments
+        content = re.sub(r'\{-[\s\S]*?-\}', '', content)
+        
+        result = []
+        for line in content.split('\n'):
+            # Handle -- line comments
+            if '--' in line:
+                line = line.split('--')[0]
+            result.append(line)
+    
+    # Dart comment handling
+    elif language == 'dart':
+        # Remove /* */ block comments
+        content = re.sub(r'/\*[\s\S]*?\*/', '', content)
+        
+        result = []
+        for line in content.split('\n'):
+            # Handle // line comments
+            if '//' in line:
+                line = line.split('//')[0]
+            result.append(line)
+    
+    # MATLAB comment handling
+    elif language == 'matlab':
+        # Remove %{ %} block comments
+        content = re.sub(r'%\{[\s\S]*?%\}', '', content)
+        
+        result = []
+        for line in content.split('\n'):
+            # Handle % line comments
+            if '%' in line:
+                line = line.split('%')[0]
             result.append(line)
     
     # Unknown language handling
