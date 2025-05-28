@@ -28,7 +28,7 @@
   </a>
 </p>
 
-Clean, streamlined code at your fingertips. Remove comments from your source files across 20+ programming languages with just a click.
+Clean, streamlined code at your fingertips. Remove comments from your source files across 20+ programming languages with just a click..
 
 ## Features
 
