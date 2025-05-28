@@ -2,6 +2,15 @@
 
 All notable changes to the "Comment Cleaner Pro" extension will be documented in this file.
 
+## [0.1.1] - 2025-05-28
+
+### Added
+- Activity bar integration with dedicated sidebar
+- Clean Comments view with quick access to commands
+- Cleaned Files history view that tracks recently processed files
+- Improved error handling and progress reporting
+- Better file history tracking
+
 ## [0.1.0] - 2025-05-28
 
 ### Added

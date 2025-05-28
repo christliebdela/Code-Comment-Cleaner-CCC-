@@ -47,7 +47,14 @@ exports.deactivate = deactivate;
 const vscode = __importStar(require("vscode"));
 const ccpRunner_1 = require("./ccpRunner");
 const fileSelector_1 = require("./fileSelector");
+const ccpViewProvider_1 = require("./ccpViewProvider");
 function activate(context) {
+    // Create view providers
+    const filesViewProvider = new ccpViewProvider_1.FilesViewProvider();
+    const historyViewProvider = new ccpViewProvider_1.HistoryViewProvider();
+    // Register tree data providers
+    vscode.window.registerTreeDataProvider('ccpFiles', filesViewProvider);
+    vscode.window.registerTreeDataProvider('ccpHistory', historyViewProvider);
     // Register command for single file processing
     let cleanCurrentFile = vscode.commands.registerCommand('ccp.cleanComments', () => __awaiter(this, void 0, void 0, function* () {
         const editor = vscode.window.activeTextEditor;
@@ -63,6 +70,8 @@ function activate(context) {
             });
             yield (0, ccpRunner_1.executeCcp)(document.fileName, backup === 'No', false);
             yield vscode.commands.executeCommand('workbench.action.files.revert');
+            // Add to history
+            historyViewProvider.addToHistory(document.fileName);
             vscode.window.showInformationMessage('Comments removed successfully!');
         }
         catch (error) {
@@ -71,7 +80,7 @@ function activate(context) {
     }));
     // Register command for batch file processing
     let cleanMultipleFiles = vscode.commands.registerCommand('ccp.cleanMultipleFiles', () => __awaiter(this, void 0, void 0, function* () {
-        yield (0, fileSelector_1.selectAndProcessFiles)();
+        yield (0, fileSelector_1.selectAndProcessFiles)(historyViewProvider);
     }));
     context.subscriptions.push(cleanCurrentFile, cleanMultipleFiles);
 }

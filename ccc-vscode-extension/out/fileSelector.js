@@ -45,7 +45,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.selectAndProcessFiles = selectAndProcessFiles;
 const vscode = __importStar(require("vscode"));
 const ccpRunner_1 = require("./ccpRunner");
-function selectAndProcessFiles() {
+function selectAndProcessFiles(historyProvider) {
     return __awaiter(this, void 0, void 0, function* () {
         // Get pattern from user
         const pattern = yield vscode.window.showInputBox({
@@ -55,29 +55,22 @@ function selectAndProcessFiles() {
         if (!pattern) {
             return;
         }
-        // Create options
-        const noBackup = (yield vscode.window.showQuickPick(['Create Backups', 'No Backups'], {
-            placeHolder: 'Should backups be created?'
-        })) === 'No Backups';
-        const force = (yield vscode.window.showQuickPick(['Skip Unknown Files', 'Force Process All Files'], {
-            placeHolder: 'How to handle unknown file types?'
-        })) === 'Force Process All Files';
-        const recursive = pattern.includes('**') || (yield vscode.window.showQuickPick(['Non-Recursive', 'Recursive'], {
-            placeHolder: 'Process files in subdirectories?'
-        })) === 'Recursive';
         // Find files matching the pattern
         const files = yield vscode.workspace.findFiles(pattern);
         if (files.length === 0) {
             vscode.window.showWarningMessage(`No files found matching pattern: ${pattern}`);
             return;
         }
-        // Confirm with user
-        const proceed = yield vscode.window.showQuickPick(['Yes', 'No'], {
-            placeHolder: `Process ${files.length} files?`
+        // Ask about backup creation
+        const backup = yield vscode.window.showQuickPick(['Yes', 'No'], {
+            placeHolder: 'Create backup files?'
         });
-        if (proceed !== 'Yes') {
-            return;
-        }
+        const noBackup = backup === 'No';
+        // Ask about force processing for unknown file types
+        const force = yield vscode.window.showQuickPick(['Yes', 'No'], {
+            placeHolder: 'Force processing of unknown file types?'
+        });
+        const forceProcess = force === 'Yes';
         // Process each file
         const progress = yield vscode.window.withProgress({
             location: vscode.ProgressLocation.Notification,
@@ -90,7 +83,11 @@ function selectAndProcessFiles() {
                     break;
                 }
                 try {
-                    yield (0, ccpRunner_1.executeCcp)(file.fsPath, noBackup, force);
+                    yield (0, ccpRunner_1.executeCcp)(file.fsPath, noBackup, forceProcess);
+                    // Add to history if provider exists
+                    if (historyProvider) {
+                        historyProvider.addToHistory(file.fsPath);
+                    }
                     processed++;
                     progress.report({
                         increment: 100 / files.length,
